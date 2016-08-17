@@ -1,0 +1,17 @@
+version: "1"
+services:
+  grafana:
+    image: centos:7
+    ports:
+      - "3000:3000"
+    user: "grafana"
+    command: ["/usr/sbin/grafana-server",
+              "--homepath=/usr/share/grafana",
+              "--config=/etc/grafana/grafana.ini",
+              "cfg:default.paths.data=/var/lib/grafana",
+              "cfg:default.paths.logs=/var/log/grafana",
+              "cfg:default.paths.plugins=/grafana-plugins"]
+registries:
+  atomicregistry:
+    url: atomic-registry.usersys.redhat.com:5000
+    namespace: vrutkovs

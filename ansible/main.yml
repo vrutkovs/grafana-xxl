@@ -1,0 +1,28 @@
+- hosts: grafana
+  vars:
+    grafana_version: 3.1.1-1470047149
+  tasks:
+    - name: Upgrade all packages
+      yum: name=* state=latest
+    - name: Install dependencies
+      yum: name="{{ item }}" state=latest
+      with_items:
+        - sqlite
+    - name: Install grafana
+      yum: name="https://grafanarel.s3.amazonaws.com/builds/grafana-{{ grafana_version }}.x86_64.rpm" state=present
+    - name: Install plugins
+      command: grafana-cli --pluginsDir /grafana-plugins plugins install {{ item }}
+      with_items:
+        - grafana-piechart-panel
+        - alexanderzobnin-zabbix-app
+        - mtanda-histogram-panel
+    - name: Copy config file
+      copy: src="grafana.ini" dest=/etc/grafana owner=grafana
+    - name: Make sure grafana user is the owner of its dirs
+      file: name={{ item }} state=directory owner=grafana recurse=true
+      with_items:
+        - /grafana-plugins
+        - /var/lib/grafana
+        - /var/log/grafana
+    - name: Clean yum files
+      command: yum clean all
