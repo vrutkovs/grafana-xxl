@@ -1,15 +1,11 @@
 - hosts: grafana
   vars:
-    grafana_version: 3.1.1-1470047149
+    rpm: https://grafanarel.s3.amazonaws.com/builds/grafana-3.1.1-1470047149.x86_64.rpm
   tasks:
     - name: Upgrade all packages
       yum: name=* state=latest
-    - name: Install dependencies
-      yum: name="{{ item }}" state=latest
-      with_items:
-        - sqlite
     - name: Install grafana
-      yum: name="https://grafanarel.s3.amazonaws.com/builds/grafana-{{ grafana_version }}.x86_64.rpm" state=present
+      yum: name="{{ rpm }}" state=present
     - name: Install plugins
       command: grafana-cli --pluginsDir /grafana-plugins plugins install {{ item }}
       with_items:
