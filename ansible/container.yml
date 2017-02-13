@@ -11,6 +11,8 @@ services:
               "cfg:default.paths.data=/var/lib/grafana",
               "cfg:default.paths.logs=/var/log/grafana",
               "cfg:default.paths.plugins=/grafana-plugins"]
+    environment:
+      REQUESTS_CA_BUNDLE: /etc/pki/tls/certs/ca-bundle.crt
 registries:
   atomicregistry:
     url: atomic-registry.usersys.redhat.com:5000
