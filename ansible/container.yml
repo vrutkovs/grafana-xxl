@@ -16,4 +16,4 @@ services:
 registries:
   atomicregistry:
     url: atomic-registry.usersys.redhat.com:5000
-    namespace: vrutkovs
+    namespace: vrutkovs-public
