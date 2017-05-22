@@ -1,19 +1,24 @@
-version: "1"
+version: "2"
+settings:
+  conductor_base: centos:7
 services:
   grafana:
-    image: centos:7
-    ports:
-      - "3000:3000"
-    user: "grafana"
+    from: centos:7
     command: ["/usr/sbin/grafana-server",
               "--homepath=/usr/share/grafana",
               "--config=/etc/grafana/grafana.ini",
               "cfg:default.paths.data=/var/lib/grafana",
               "cfg:default.paths.logs=/var/log/grafana",
               "cfg:default.paths.plugins=/grafana-plugins"]
-    environment:
-      REQUESTS_CA_BUNDLE: /etc/pki/tls/certs/ca-bundle.crt
+    ports:
+      - "3000:3000"
+    volumes:
+      - "/var/lib/grafana"
+    roles:
+      - role: grafana
+        rpm: https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.2.0-1.x86_64.rpm
+        grafana_port: "3000"
 registries:
   atomicregistry:
-    url: atomic-registry.usersys.redhat.com:5000
+    url: docker-registry.engineering.redhat.com
     namespace: vrutkovs-public
