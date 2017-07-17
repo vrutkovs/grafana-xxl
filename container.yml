@@ -16,7 +16,7 @@ services:
       - "/var/lib/grafana"
     roles:
       - role: grafana
-        rpm: https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.2.0-1.x86_64.rpm
+        rpm: https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.4.1-1.x86_64.rpm
         grafana_port: "3000"
 registries:
   atomicregistry:
