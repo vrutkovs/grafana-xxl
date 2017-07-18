@@ -21,12 +21,14 @@
     src: files/grafana.ini
     dest: /etc/grafana
     owner: grafana
+    group: root
 
 - name: Make sure grafana user is the owner of its dirs
   file:
     name: "{{ item }}"
     state: directory
     owner: grafana
+    group: root
     recurse: true
   with_items:
     - /grafana-plugins
