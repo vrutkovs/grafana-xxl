@@ -10,6 +10,7 @@ services:
               "cfg:default.paths.data=/var/lib/grafana",
               "cfg:default.paths.logs=/var/log/grafana",
               "cfg:default.paths.plugins=/grafana-plugins"]
+    user: grafana
     ports:
       - "3000:3000"
     volumes:
